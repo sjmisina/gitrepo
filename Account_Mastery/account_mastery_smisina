@@ -1,0 +1,28 @@
+
+import snowflake.connector
+import pandas as pd
+
+# Establish the connection
+conn = snowflake.connector.connect(
+  user='smisina',
+  password='zaxxec-ruVjac-cotry7',
+  account='CDBQPXE-EB65335',
+  warehouse='TABLEAU_WH',
+  database='DEV'
+)
+# Create a cursor object.
+cur = conn.cursor()
+
+# Execute a query
+cur.execute("SELECT * FROM DEV.SALESFORCE.FACT_ACCOUNT")
+
+# Fetch result and convert it into a pandas DataFrame
+df = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
+
+# Close the cursor and connection
+cur.close()
+conn.close()
+
+# Now you can use the dataframe
+# print(df.head())
+print(df['ACCOUNT_ID', 'ACCOUNT_'])
